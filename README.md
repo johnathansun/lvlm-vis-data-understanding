@@ -1,6 +1,6 @@
 # Does visualization help AI understand data?
 
-Charts and graphs help people analyze data, but can they also be useful to AI systems? Our paper studies how visualization impacts the ability for AI systems to observe and synthesize patterns, trends, and features of quantitative datasets. By generating synthetic data for classic real-world analysis tasks, we find that GPT 4.1 and Claude 3.5, like humans, describe data more accurately and precisely with visualizations.
+Charts and graphs help people analyze data, but can they also be useful to AI systems? Our paper studies how visualization impacts AI systems' ability to observe and synthesize patterns, trends, and features of quantitative datasets. By generating synthetic data for classic real-world analysis tasks, we find that GPT 4.1 and Claude 3.5, like humans, describe data more accurately and precisely with visualizations.
 
 
 ![visual abstract](assets/visual_abstract.png "Visual abstract")
