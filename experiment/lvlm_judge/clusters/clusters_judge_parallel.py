@@ -1,6 +1,4 @@
 import sys 
-sys.path.append("/Users/victoriali/Documents/GitHub/llms-vis/")
-sys.path.append("/Users/johnathansun/Documents/llms-vis/")
 from public.experiment.judge import run_llm_judge
 from pydantic import BaseModel
 import argparse 

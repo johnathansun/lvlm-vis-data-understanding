@@ -1,7 +1,5 @@
 import io
 import sys 
-sys.path.append("/Users/victoriali/Documents/GitHub/llms-vis/")
-sys.path.append("/Users/johnathansun/Documents/llms-vis/")
 import json
 import base64
 import numpy as np

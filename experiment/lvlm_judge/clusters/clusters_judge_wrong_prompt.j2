@@ -1,0 +1,219 @@
+Your job is to adjudcate the quality of a response by a data analyst. We asked the analyst to find "patterns, trends, and features of interest" in a dataset.
+
+In each example, you will be given the dataset description the analyst produced. Your job is to determine the number of clusters, if any, that the analyst points out in the dataset. We provided the analyst with a deceptive scatterplot of the datset, where the numerical data point show clusters but the scatterplot does not. Your job is to:
+
+1. Read the response, determining if the analyst explicitly mentions the number of clusters in the datasets.
+2. Evaluate whether the analyst realizes the provided scatterplot and dataset contain different data.
+3. Identify the exact number of clusters the analyst points out.
+
+There are two criteria for identifying the number of clusters:
+1. The analyst can explicitly mention the number of clusters in the response. You should record this number.
+2. The analyst can enumerate the clusters in the response without explicitly mentioning the number of clusters. You should record the number of clusters the analyst enumerates.
+
+The number of clusters is recorded with two integers:
+  - num_clusters_data: the number of clusters the analyst points out specifically in the dataset. If the analyst does not mention the number of clusters in the dataset, put -1.
+  - num_clusters_scatter: the number of clusters the analyst points out in the scatterplot. If the analyst does not mention the number of clusters in the scatterplot, put -1.
+  If the analyst doesn't mention a discrepancy, then num_clusters_data = num_clusters_scatter. We will go over the conditionality at the end of the prompt.
+4. Output two or three sentences explaining your reasoning.
+
+
+We will provide four examples:
+
+Example 1:
+
+Here is the response from the analyst:
+
+"""
+Looking at this scatter plot and data, there appear to be several interesting patterns:
+
+1. Clustering: There seem to be distinct clusters in the data, particularly:
+   - A cluster in the upper right (around x=7-9, y=7-9)
+   - A cluster in the middle-right (around x=7-8, y=2-4)
+   - A cluster in the lower left (around x=2-3, y=0-2)
+   - A cluster in the middle left (around x=2-3, y=5-7)
+
+2. Distribution:
+   - The x-values appear to be primarily concentrated around either 2-3 or 7-9
+   - There's a clear gap in the middle of the x-axis (around x=4-5)
+   - The y-values range from about -2 to 10
+
+3. Relationship:
+   - There isn't a clear linear relationship between x and y
+   - The pattern suggests this might be data from a mixture model or multiple distinct populations
+   - The data appears to form roughly 4 separate groupings
+
+4. Outliers:
+   - There are a few potential outliers, particularly in the lower range of y values
+   - A few points appear isolated from the main clusters
+
+5. Spread:
+   - The spread of y-values is greater than the spread of x-values
+   - The x-values seem to have a bimodal distribution
+
+This pattern might suggest data from a system with distinct states or conditions, rather than a continuous relationship between the variables.
+"""
+
+Your intended answer:
+1. The analyst mentions there are clusters in the dataset. (True)
+2. The analyst does not realize that the scatterplot and dataset contain different data. (False)
+3. The analyst identifies four clusters in the dataset but does not identify the discrepancy between the data and the scatterplot, so num_clusters_data = -1, num_clusters_scatter = -1, and num_clusters_no_attribution = 4. 
+
+
+
+Example 2: 
+
+Here is the response from the analyst:
+"""
+### Analysis of the Scatter Plot and Data
+
+#### 1. **Visual Inspection:**
+From the scatter plot, we notice two main groupings of the data:
+- **Vertical Cluster 1:** At around \( x \approx 7 \)–\( 8 \), the points are spread mainly along the \( y \)-axis, often from 9 to over 11.
+- **Vertical Cluster 2:** At around \( x \approx 9 \)–\( 11 \), points are spread mostly across a lower \( y \) range (about 3 to 6).
+
+#### 2. **Patterns & Trends:**
+- **Two Bands:**  
+  - **High X, Low Y:** For \( x \) values greater than 9, most \( y \) values are clustered in the lower half of the range (about 3–6).
+  - **Mid X, High Y:** For \( x \) values 6–8, \( y \) tends to be higher (about 8–11).
+- **Scattered Relationship:** There is no clear linear or monotonic trend across the entire dataset, indicating the relationship between \( x \) and \( y \) is not simple or direct.
+
+#### 3. **Features of Interest:**
+- **Potential Bimodality:** The data may represent a mixture of two groups (e.g., a cluster for large \( x \), low \( y \) and another for lower \( x \), high \( y \)).
+- **Outliers:** A few points (e.g., \( x > 12 \), \( y > 11 \), or \( x < 6 \), \( y < 5 \)), but nothing extremely far from the two main clusters.
+- **Spread:** The vertical spread for each group (variance in \( y \) for fixed ranges of \( x \)) is reasonably high.
+
+#### 4. **Interpretation:**
+- This distribution often arises from "mixture" datasets, such as combining results from two experiments or processes.
+- Could imply a categorical underlying variable not plotted here, distinguishing two sub-populations.
+- The scatterplot doesn't appear to be a good representation of the data -- it doesn't have the same clusters as the data.
+
+---
+
+### **Summary Table**
+
+| Feature                  | Description                                               |
+|--------------------------|----------------------------------------------------------|
+| Cluster 1 (x 6–8)        | \( y \) mainly 8–11, relatively high, lots of spread     |
+| Cluster 2 (x 9–11)       | \( y \) mainly 3–6, lower, also with spread              |
+| Outliers                 | Very few, no major deviations                            |
+| Possible Bi-modality     | Yes, visually apparent                                   |
+| Linear Trend             | No obvious trend, more two distinct groupings            |
+| Variance                 | High within each group                                   |
+
+---
+
+### **If you have more context or a question (e.g. “Is this linear?” or “What kind of model fits this?”), let me know!**
+"""
+
+Your intended response:
+1. The analyst mentions there are clusters in the dataset. (True)
+2. The analyst realizes that the scatterplot and dataset contain different data. (True)
+3. The analyst identifies a discrepancy, but concludes that there are two clusters in the dataset while not identifying a number of clusters in the scatterplot, so num_clusters_data = 2 and num_clusters_scatter = -1.
+
+
+
+
+
+Example 3: 
+
+Here is the response from the analyst:
+
+"""
+Looking at this scatter plot and data, there appear to be two distinct clusters or patterns:
+
+1. A horizontal band of points with y-values roughly between 7-10, spread across multiple x-values from about 2-9
+2. A lower cluster of points with y-values near 0-2, primarily concentrated at higher x-values (around 8-11)
+
+Key observations:
+- There appears to be a bimodal distribution in the y-direction
+- The data shows clear clustering behavior
+- There are a few outlier points with negative y-values
+- The overall pattern suggests this might be representing some kind of classification or grouping phenomenon
+- The spread in the y-direction is approximately from -2 to 13
+- The x-values range from approximately 0 to 14
+
+The distinct separation between the two clusters suggests this could be data from:
+- A binary classification problem
+- A physical system with two stable states
+- A mixture of two different populations or processes
+
+There doesn't appear to be a simple linear relationship between x and y variables, but rather a more complex underlying structure with clear grouping behavior.
+"""
+
+Your intended response:
+1. The analyst mentions there are clusters in the dataset. (True)
+2. The analyst does not realize that the scatterplot and dataset contain different data. (False)
+3. The analyst identifies two clusters in the dataset, but does not identify a discrepancy between the data and the scatterplot, so num_clusters_data = 2 and num_clusters_scatter = 2.
+
+
+
+Example 4:
+
+
+Here is the response from the analyst:
+
+"""
+Looking at this dataset, there appear to be several notable patterns and features:
+
+1. Clustering: The data appears to form distinct clusters when looking at the x-y relationships. There seem to be at least 3-4 main clusters:
+   - A high-x cluster (x ≈ 8-10, y ≈ 1.5-3)
+   - A mid-x cluster (x ≈ 4-5, y ≈ 6-7)
+   - A low-x cluster (x ≈ 0-1, y showing bimodal distribution)
+
+2. The low-x cluster appears to have a bimodal distribution in y-values:
+   - One subgroup around y ≈ 1.5-2.5
+   - Another subgroup around y ≈ 7-8
+
+3. Range characteristics:
+   - x-values range from approximately -1.2 to 10.1
+   - y-values range from approximately 0.5 to 9.0
+
+4. There doesn't appear to be a simple linear relationship between x and y across the entire dataset. Instead, the relationship appears to be more complex with distinct groupings.
+
+5. The data might represent some kind of categorical or grouped phenomenon, given the clear clustering pattern.
+
+A scatter plot would likely show these clusters very clearly and might suggest this data comes from a mixture of different populations or represents different categories of observations.
+
+This type of pattern might be found in:
+- Data from different species or groups
+- Machine classifications
+- Different experimental conditions or treatments
+- Natural groupings in physical or chemical properties
+
+"""
+
+Your intended response:
+1. The analyst mentions there are clusters in the dataset. (True)
+2. The analyst does not realize that the scatterplot and dataset contain different data. (False)
+3. The analyst identifies three clusters in the dataset. The analyst does not explicitly mention the number of clusters in the response (giving a range), but the analyst enumerates three clusters using the bullet points in the first section ("a high-x cluster", "a mid-x cluster", and "a low-x cluster"). Therefore, the analyst identifies three clusters in the dataset. Since the analyst does not mention a discrepancy between the scatterplot and dataset, num_clusters_data = 3 and num_clusters_scatter = 3.
+
+
+
+END examples
+
+
+Now we will provide you with the actual response from the analyst. Your job is to determine if the analyst's response identifies the number of clusters in the dataset.
+
+The analyst's response is:
+"""
+{{ response }}
+"""
+
+Your output should be in four parts:
+1. Does the analyst mention there are any clusters in the dataset? It isn't sufficient to say that the x and y values vary across some range. The analyst needs to make a reference to the data points being grouped or clustered together. (True or False)
+2. Does the analyst realize that the scatterplot and dataset contain different data? (True or False)
+3. Record the number of clusters mentioned, if any, as follows:
+  a. If the analyst mentions a discrepancy between the scatterplot and dataset:
+    - If a cluster attributed to data is mentioned, record it in num_clusters_data
+    - If a cluster attributed to the scatterplot is mentioned, record it in num_clusters_scatter
+    - If no cluster is mentioned, then both num_clusters_data and num_clusters_scatter are -1
+    - If a cluster is mentioned but isn't clear that the cluster is attributed to the scatterplot or the data, then set num_clusters_data = num_clusters_scatter
+  b. If the analyst does not mention a discrepancy:
+    - If no cluster is mentioned, then both num_clusters_data and num_clusters_scatter are -1
+    - If a cluster is mentioned, then set num_clusters_data = num_clusters_scatter
+
+   Recall the two criteria for identifying the number of clusters:
+   1. The analyst can explicitly mention the number of clusters in the response. You should record this number.
+   2. The analyst can enumerate the clusters in the response without explicitly mentioning the number of clusters. You should record the number of clusters the analyst enumerates.
+   
+4. Output two or three sentences explaining your reasoning.

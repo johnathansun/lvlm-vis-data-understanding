@@ -3,8 +3,7 @@ from ast import literal_eval
 import re 
 import numpy as np 
 
-# BASE = "/Users/vrli/Desktop/"
-BASE = "/Users/johnathansun/Documents/public/"
+BASE = "your working dir"
 
 ########################################################
 ## Clusters 
