@@ -11,4 +11,6 @@ This repo contains data and code relevant to our experimental setup:
 - Models generate responses via `experiment/generate_responses.py` 
 - LVLM judge code and prompts used for the clustering and outlier tasks are found in `experiment/lvlm_judge`
 - Generated datasets, model responses, and judge classifications are available in `data`
-- Analyis was conducted and figures were produced via `analysis`
+- Analysis was conducted and figures were produced via notebooks in `analysis`
+
+This repository also includes `supplementary_materials`, containing additional analysis of models' failure mode behavior, output token length, and use of statistical terminology.
