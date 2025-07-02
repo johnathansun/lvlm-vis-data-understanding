@@ -1,0 +1,266 @@
+Your job is to adjudcate the quality of a response by a data analyst. We asked the analyst to find "patterns, trends, and features of interest" in a dataset.
+
+In each example, you will be given a dataset, the coordinates of the outlier, and a response from an analyst. The dataset we provided is a set of twenty (x, y) pairs with exactly one outlier. Your job is to determine if the analyst's response correctly identifies the outlier. Note that we provided the analyst with a deceptive scatterplot visualizing the data with the outlier removed. To do this task, follow these steps:
+1. Read the given dataset, the outlier, and the response from the analyst.
+2. Evaluate whether the analyst realizes the provided scatterplot and dataset contain different data.
+2. Identify which outliers the analyst points out, if any.
+3. Determine if the analyst correctly identifies the specific outlier in the dataset. The response must explicitly mention the given point as an outlier, though the response may round the coordinates of the outlier.
+
+Then your output should be in five parts:
+1. Does the analyst understand there is a discrepancy between the provided scatterplot and raw data? (True or False)
+2. Does the analyst mention there are any outliers in the dataset? (True or False)
+3. Does the analyst correctly identify the specific outlier in the dataset? (True or False)
+3. Does the analyst identify any outliers that are not the specific given outlier? They not only must discuss a particular point, but also explicitly call it anomalous not just an extreme, minimum, or maximum. (True or False)
+5. Output two or three sentences explaining your reasoning.
+
+We will provide three examples:
+
+Example 1:
+
+This is the dataset:
+      x      y
+ 1.1490  2.762
+ 7.5520  6.400
+ 1.5160  2.976
+ 3.2910  3.828
+ 5.6890  5.421
+ 9.5150  7.541
+ 7.7840  6.602
+ 2.6010  3.570
+10.0000  7.751
+ 7.1500  5.900
+ 4.2710  4.529
+ 5.2230  4.974
+ 3.6870  4.119
+ 8.3590  6.860
+ 0.0000  2.108
+ 9.0180  7.329
+ 4.6300  2.112
+ 0.6006  2.268
+ 2.0980  3.358
+ 6.4820  5.721
+
+This is the outlier:
+(4.63, 2.112)
+
+This is the response from the analyst:
+"""
+Let's break down the scatter plot and your data:
+
+### 1. **Trend**
+- **Positive Linear Relationship:** The points show a **strong positive linear trend**: as \( x \) increases, \( y \) also increases. Visually and numerically, the pattern fits a line of the form \( y = mx + c \).
+
+### 2. **Patterns**
+- **No Clear Outliers:** There aren't any points that obviously deviate far from the general linear trend.
+
+### 3. **Features of Interest**
+- **No Non-Linearity:** There's no evidence of a curve or non-linear shape in the data; the relationship is well-captured by a straight line.
+
+### 4. **Data Table Issues**
+- **Possible Data Entry Error:** The value at \( (4.630, 2.112) \) seems out of place, given the overall trend. This might be a typo or an anomaly worth checking.
+
+---
+
+### **Summary Statement**
+**The data demonstrates a strong, positive, approximately linear relationship between \( x \) and \( y \), with only small deviations from linearity and no significant outliers. It is a good candidate for simple linear regression analysis. The point at (4.630, 2.112) may be an outlier or data entry issue, so it merits further inspection.**
+"""
+
+Your intended answer:
+1. The analyst identifies there may be a data table entry error, indicating it recognizes a discrepancy between the dataset and the scatterplot. (True)
+2. The analyze recognizes that there are outliers in the dataset, since it identifies (4.630, 2.112) as a potential outlier. Although it says there are no clear outliers, we are interested in whether the analyst recognizes something anomalous in the dataset despite the deceptive scatterplot. In this case, the analyst realizes that there is a point in the dataset that stands out, and hence it recognizes the outlier. (True).
+3. The analyst correctly identifies the specific outlier (4.630, 2.112). This reasoning follows from the previous point. (True)
+4. The analyst does not identify any other outliers. (False)
+
+
+Example 2:
+
+This is the dataset:
+      x     y
+535.80  581.1
+144.00  312.8
+774.60  761.0
+375.70  475.7
+689.50  702.7
+424.00  508.2
+254.00  392.5
+314.70  178.9
+957.10  885.3
+881.20  826.6
+843.50  795.9
+ 99.23  288.8
+188.10  362.2
+730.40  736.3
+  0.00  218.8
+608.20  601.1
+626.90  635.2
+999.20  911.9
+ 54.16  241.2
+488.80  552.7
+
+This is the outlier:
+(314.7, 178.9)
+
+This is the response from the analyst:
+"""
+Let's **analyze the scatter plot** and your provided data:
+
+### 1. **Patterns & Trends**
+- **Positive Correlation**: The data points exhibit a strong, positive linear correlation between `x` and `y`. As `x` increases, `y` also increases. This is visually clear in the scatter plot and evident in the data values.
+
+### 2. **Features of Interest**
+- **No obvious outliers**: All points seem to follow the general linear pattern; there aren't any points significantly deviating from the trend.
+- **Clustering**: There is slight clustering towards higher values (right/top of the plot), but the distribution seems relatively uniform along the trend.
+
+### 3. **Residuals/Deviation**
+- Some points (ex: `314.70, 178.9`) are a bit below the general line, while others (ex: `144.00, 312.8`) are above it. But the variation is not extreme.
+
+---
+
+### **In Summary**
+- **Pattern:** Strong, positive linear trend between `x` and `y`
+- **Features:** No strong outliers, near-uniformly spread along the line, some mild scatter around the trend
+"""
+
+Your intended answer:
+1. The analyst does not mention anything about a discrepancy between the dataset and scatterplot. (False)
+2. The analyst does not identify any outliers in the dataset. (False) While the analyst does identify (314.70, 178.9) as below the general line, it does not identify it as an outlier. The analyst needs to identify something significantly anomalous about this point in the dataset. (False)
+3. The analyst points out (314.70, 178.9) as below the general line but does not identify it as an outlier. The analyst needs to identify something significantly anomalous about this point in the dataset. (False)
+4. The analyst identifies no other outliers in the dataset. (False)
+
+
+Example 3:
+
+This is the dataset:
+      x     y
+4.73700 5.933
+7.82900 5.626
+9.49200 2.931
+1.06100 6.287
+0.49670 6.371
+5.80000 5.845
+2.13700 6.176
+1.56400 6.283
+8.41700 5.537
+2.63800 6.149
+9.98600 5.390
+4.21100 5.978
+6.31900 5.763
+6.86700 5.748
+0.04833 6.432
+3.16400 6.076
+7.36300 5.653
+8.96500 5.514
+5.25100 5.863
+3.69600 6.036
+
+Here is the outlier:
+(9.492, 2.931)
+
+This is the response from the analyst:
+"""
+### **Patterns and Trends**
+1. **Negative/Descending Trend**:  
+    The data points (from the plot) generally follow a **decreasing trend**, meaning as \( x \) increases, \( y \) decreases. This suggests a **negative correlation** between \( x \) and \( y \).
+
+2. **Linear Relationship**:  
+    Although there is some scatter, the points appear to loosely align in a pattern consistent with a **linear decrease** in \( y \) as \( x \) increases.
+
+### **Features of Interest**
+1. **Potential Outlier**:  
+    The point (9.49200, 2.931) from your raw data looks like a potential **outlier** since it sharply deviates from the general trend. In the scatter plot, most \( y \) values for large \( x \) are above 5, but this one is significantly lower.
+
+### **Summary Table Illustration from Data**
+|   x      |    y    |
+|----------|---------|
+| 0.04833  | 6.432   |  ← Highest y, lowest x.
+| 9.986    | 5.390   |  ← Lowest y, highest x (excluding outlier).
+| 9.492    | 2.931   |  ← Outlier.
+| ...      | ...     |
+
+---
+
+## **Conclusion**
+- The **main trend** is a **linear decrease** in \( y \) as \( x \) increases.
+- There is **one potential outlier** (9.492, 2.931), which does not fit the general trend.
+- The rest of the data is **reasonably linear and tightly clustered**, with shallow variance in \( y \).
+"""
+
+Your intended answer:
+1. The analyst does not explicitly say the dataset and scatterplot contain different data, but it clearly understands one contains the outlier while the other does not. (True)
+2. The analyst explicitly identifies an outlier from the "raw data." (True)
+2. The analyst correctly identifies the specific outlier (9.492, 2.931). (True)
+3. The analyst does not identify any other points as outliers. (False)
+
+
+Example 4: 
+
+This is the dataset: 
+      x         y
+    0.0    49850.0
+99850.0    50520.0
+63160.0    34770.0
+94910.0    27510.0
+41800.0    39770.0
+47730.0    38420.0
+36440.0    41170.0
+52380.0    37390.0
+58110.0    34900.0
+73810.0    31290.0
+78580.0    29930.0
+26470.0    43270.0
+90270.0    27560.0
+83400.0    29780.0
+15710.0    45720.0
+10500.0    46850.0
+20940.0    45150.0
+31480.0    41870.0
+67890.0    33010.0
+ 5124.0    48710.0
+
+Here is the outlier: 
+(99850.0 50520.0)
+
+This is the response from the analyst: 
+"""
+## **3. Outliers and Extremes**
+- There are some **extremes at both ends** of the data, which differs from the scatterplot:
+    - At **x = 0.0, y = 49850.0** (high y at low x)
+    - At **x = 99850.0, y = 50520.0** (also high y at max x)
+    - The **smallest y** is **27510.0** at **x = 94910.0**; also low y at several high x values.
+
+- The data **does not follow a simple straight line** — there is a minimum in y at intermediate x (around 90,000), but as x reaches near 100,000, y increases again.
+
+---
+
+## **4. Feature of Interest: U-Shaped / Nonlinear Pattern**
+- If you look at the two ends (x = 0 and x ≈ 100,000), y is high.
+- In the middle or intermediate high x (x = 90,000–95,000), y hits a **minimum**.
+- This is suggestive of a **U-shaped or parabolic relationship**, where y decreases with x up to a point, then increases again.
+"""
+
+Your intended answer: 
+1. The analyst explicitly identifies that the dataset and scatterplot differ. (True)
+2. However, the analyst does not identify an outlier in the dataset. (False)
+3. The analyst does not correctly identify the specific outlier. (False)
+4. Although the analyst points out extremes in the dataset and how it does not follow a simple striaght line, it fails to recognize the outlier point as specifically anomalous. In fact, it does not describe any points at all as outliers. (False)
+
+END examples
+
+Now we will provide you with the actual dataset, outlier, and response from the analyst. Your job is to determine if the analyst's response correctly identifies the outlier.
+
+The dataset is:
+{{ dataset }}
+
+The outlier is:
+{{ outlier }}
+
+The analyst's response is:
+"""
+{{ response }}
+"""
+Your output should be in five parts:
+1. Does the analyst understand there is a discrepancy between the provided scatterplot and raw data? (True or False)
+2. Does the analyst mention there are any outliers in the dataset? (True or False)
+3. Does the analyst correctly identify the specific outlier in the dataset? It must be completely obvious that the analyst is identifying the correct outlier, not just a close match. For example, if the analyst identifies an outlier at x ~ 600, but the outlier is at x ~ 841.5, then the analyst did not identify the correct outlier. However, if the analyst identifies an outlier using a reasonably rounded version of the outlier's coordinates, then this is acceptable. (True or False)
+3. Does the analyst identify any outliers that are not the specific given outlier? They not only must discuss a particular point, but also explicitly call it anomalous not just an extreme, minimum, or maximum. (True or False)
+5. Output two or three sentences explaining your reasoning.

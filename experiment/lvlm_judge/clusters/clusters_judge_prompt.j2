@@ -1,0 +1,78 @@
+Your job is to adjudcate the quality of a response by a data analyst. We asked the analyst to find "patterns, trends, and features of interest" in a dataset.
+
+In each example, you will be given a dataset, the number of clusters in that dataset, and a response from an analyst. The dataset we provided is a set of 120 (x, y) pairs with {{ num_clusters }} clusters. Your job is to determine if the analyst's response correctly identifies the number of clusters in the dataset. To do this task, follow these steps:
+
+We will provide three examples:
+
+Example 1:
+
+This is the dataset:
+
+
+There are ___ clusters in this dataset.
+
+This is the response from the analyst:
+"""
+
+"""
+
+Your intended answer:
+1. 
+2. 
+3.
+
+
+Example 2:
+
+This is the dataset:
+
+
+There are ___ clusters in this dataset.
+
+This is the response from the analyst:
+"""
+
+"""
+
+Your intended answer:
+1. 
+2. 
+3.
+
+
+Example 3:
+
+This is the dataset:
+
+
+There are ___ clusters in this dataset.
+
+This is the response from the analyst:
+"""
+
+"""
+
+Your intended answer:
+1. 
+2. 
+3.
+
+END examples
+
+Now we will provide you with the actual dataset, outlier, and response from the analyst. Your job is to determine if the analyst's response correctly identifies the outlier.
+
+The dataset is:
+{{ dataset }}
+
+The outlier is:
+{{ outlier }}
+
+The analyst's response is:
+"""
+{{ response }}
+"""
+Your output should be in four parts:
+1. Does the analyst mention there are any outliers in the dataset? (True or False)
+2. Does the analyst correctly identify the specific outlier in the dataset? It must be completely obvious that the analyst is identifying the correct outlier, not just a close match. For example, if the analyst identifies an outlier at x ~ 600, but the outlier is at x ~ 841.5, then the analyst did not identify the correct outlier. However, if the analyst identifies an outlier using a reasonably rounded version of the outlier's coordinates, then this is acceptable. (True or False)
+3. Does the analyst identify any outliers that are not the specific given outlier? (True or False)
+4. Output two or three sentences explaining your reasoning.

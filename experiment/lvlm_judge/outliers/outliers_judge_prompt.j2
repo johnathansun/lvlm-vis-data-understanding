@@ -1,0 +1,260 @@
+Your job is to adjudcate the quality of a response by a data analyst. We asked the analyst to find "patterns, trends, and features of interest" in a dataset.
+
+In each example, you will be given a dataset, the coordinates of the outlier, and a response from an analyst. The dataset we provided is a set of twenty (x, y) pairs with exactly one outlier. Your job is to determine if the analyst's response correctly identifies the outlier. To do this task, follow these steps:
+1. Read the given dataset, the outlier, and the response from the analyst.
+2. Identify which outliers the analyst points out, if any.
+3. Determine if the analyst correctly identifies the specific outlier. The response must explicitly mention the given point as an outlier, though the response may round the coordinates of the outlier.
+
+Then, you will be asked four questions:
+1. Does the analyst mention there are any outliers in the dataset? True or False.
+2. Does the analyst correctly identify the specific outlier in the dataset? True or False.
+3. Does the analyst identify any outliers that are not the specific given outlier? True or False.
+4. Output two or three sentences explaining your reasoning.
+
+We will provide four examples:
+
+Example 1:
+
+This is the dataset:
+       x        y
+ 83790.0  87390.0
+ 26570.0  63080.0
+ 58080.0  75870.0
+ 10240.0  55370.0
+ 68560.0  80180.0
+  5807.0  53180.0
+ 87530.0  90290.0
+ 79510.0  87180.0
+ 47210.0  72890.0
+ 14760.0  59890.0
+ 53050.0  74970.0
+ 95210.0  92420.0
+ 20780.0  61290.0
+100000.0 120400.0
+     0.0  52470.0
+ 63050.0  79850.0
+ 30770.0  64520.0
+ 74780.0  83740.0
+ 40680.0  69090.0
+ 37180.0  68430.0
+
+This is the outlier:
+(100000.0, 120400.0)
+
+This is the response from the analyst:
+"""
+#### 3. **Notable Data Points**
+- **Outliers:**
+  - At x = 0, y = 52,470 — perhaps a baseline in the y value.
+  - At x = 100,000, y = 120,400 — the highest in both x and y.
+- **Low x, High y:** Even the smallest non-zero x (5,807) has a relatively high y (53,180).
+
+---
+
+## **Summary Table**
+
+| Feature                         | Description                                                                |
+|----------------------------------|----------------------------------------------------------------------------|
+| Trend/Correlation               | Strong positive correlation between x and y                                |
+| Range                           | x: 0-100,000; y: 52,470-120,400                                            |
+| Regularity                      | y increases fairly steadily with x                                         |
+| Outlier/Anomaly                 | (0, 52,470) stands out; also see x = 0 vs higher y                         |
+| Relationship Type               | Likely linear with a large positive intercept term                         |
+
+---
+
+## **Summary**
+
+The data displays a strong positive linear trend between x and y, with a significant intercept (even when x is zero, y is ~52,000). The relationship is mostly steady with minimal outliers. The data appears to reflect an additive process where y grows as x increases, but always starts from a high baseline.
+"""
+
+Your intended answer:
+1. The analyst identifies an outlier in the dataset. (True)
+2. The analyst correctly identifies the specific outlier at (100,000, 120,400). (True)
+3. The analyst also identifies an outlier at (0, 52,470), which is not the given outlier. (True)
+
+Example 2:
+
+This is the dataset:
+      x      y
+ 8.3790  8.739
+ 2.6570  6.308
+ 5.8080  7.587
+ 1.0240  5.537
+ 6.8560  8.018
+ 0.5807  5.318
+ 8.7530  9.029
+ 7.9510  8.718
+ 4.7210  7.289
+ 1.4760  5.989
+ 5.3050  7.497
+ 9.5210  9.242
+ 2.0780  6.129
+10.0000 12.040
+ 0.0000  5.247
+ 6.3050  7.985
+ 3.0770  6.452
+ 7.4780  8.374
+ 4.0680  6.909
+ 3.7180  6.843
+
+This is the outlier:
+(10.0, 12.04)
+
+This is the response from the analyst:
+"""
+### **Feature of Interest**
+- **Potential Outlier:**  
+  The point at `(6.3050, 7.985)` visually stands out from the rest. It is farther above the linear trend than the other points, suggesting it may be an **outlier**.
+
+### **Summary**
+- **Linear relationship** between `x` and `y`.
+- **One outlier** at `(6.3050, 7.985)` that deviates from the trend.
+- The rest of the points are closely packed around a straight line.
+"""
+
+Your intended answer:
+1. The analyst identifies an outlier in the dataset. (True)
+2. The analyst does not correctly identify the specific outlier, which is (10.0, 12.04). (False)
+3. The analyst identifies an outlier at (6.3050, 7.985). (True)
+
+Example 3:
+
+This is the dataset:
+x       y
+841.500 -206.30
+948.300   32.21
+995.300   23.42
+529.700   94.70
+105.200  162.40
+317.900  131.20
+211.800  143.20
+364.400  117.60
+633.500   78.94
+736.300   60.04
+581.200   91.89
+ 51.160  163.70
+788.900   51.85
+473.600  102.00
+156.300  155.80
+423.300  117.40
+895.000   36.59
+260.500  136.50
+686.400   68.30
+  5.327  179.40
+
+Here is the outlier:
+(841.5, -206.3)
+
+This is the response from the analyst:
+"""
+Let's analyze the scatter plot:
+
+### **Patterns and Trends**
+1. **Downward Trend:**  
+   - There is a clear generally **decreasing trend** in the data as the x-values increase. This likely suggests a negative correlation between the x and y values.
+
+2. **Linear Relationship:**  
+   - The data points (except one) seem to fall roughly along a straight line, indicating an approximate linear relationship.
+
+3. **Consistent Step:**  
+   - The decline appears fairly steady, i.e., the difference between successive y-values is often similar, which strengthens the idea of a linear trend.
+
+### **Features of Interest**
+
+1. **Spread:**  
+   - The y-values are well-clustered around a straight line, indicating low variation.
+
+2. **End Points:**  
+   - Both the starting and ending points of the dataset follow the general trend.
+
+---
+
+### **Summary Table**
+
+| Feature        | Description                                                    |
+|----------------|----------------------------------------------------------------|
+| Trend          | Generally decreasing (negative linear correlation)              |
+| Regularity     | Consistent step down between most points                        |
+| Spread         | Low spread                                                      |
+
+---
+
+**If you have specific axes labels or context for the data, further interpretation can be provided!**
+"""
+
+Your intended answer:
+1. The analyst does not identify an outlier in the dataset. (False)
+2. The analyst does not correctly identify the specific outlier. (False)
+3. The analyst does not identify any specific outliers. (False)
+
+Example 4: 
+
+This is the dataset: 
+      x         y
+    0.0    49850.0
+99850.0    50520.0
+63160.0    34770.0
+94910.0    27510.0
+41800.0    39770.0
+47730.0    38420.0
+36440.0    41170.0
+52380.0    37390.0
+58110.0    34900.0
+73810.0    31290.0
+78580.0    29930.0
+26470.0    43270.0
+90270.0    27560.0
+83400.0    29780.0
+15710.0    45720.0
+10500.0    46850.0
+20940.0    45150.0
+31480.0    41870.0
+67890.0    33010.0
+ 5124.0    48710.0
+
+Here is the outlier: 
+(99850.0 50520.0)
+
+This is the response from the analyst: 
+"""
+## **3. Outliers and Extremes**
+- There are some **extremes at both ends** of the data:
+    - At **x = 0.0, y = 49850.0** (high y at low x)
+    - At **x = 99850.0, y = 50520.0** (also high y at max x)
+    - The **smallest y** is **27510.0** at **x = 94910.0**; also low y at several high x values.
+
+- The data **does not follow a simple straight line** — there is a minimum in y at intermediate x (around 90,000), but as x reaches near 100,000, y increases again.
+
+---
+
+## **4. Feature of Interest: U-Shaped / Nonlinear Pattern**
+- If you look at the two ends (x = 0 and x ≈ 100,000), y is high.
+- In the middle or intermediate high x (x = 90,000–95,000), y hits a **minimum**.
+- This is suggestive of a **U-shaped or parabolic relationship**, where y decreases with x up to a point, then increases again.
+"""
+
+Your intended answer: 
+1. The analyst does not identify an outlier in the dataset. (False)
+2. The analyst does not correctly identify the specific outlier. (False)
+3. Although the analyst points out extremes in the dataset and how it does not follow a simple striaght line, it fails to recognize the outlier point as specifically anomalous. In fact, it does not describe any points at all as outliers. (False)
+
+END examples
+
+Now we will provide you with the actual dataset, outlier, and response from the analyst. Your job is to determine if the analyst's response correctly identifies the outlier.
+
+The dataset is:
+{{ dataset }}
+
+The outlier is:
+{{ outlier }}
+
+The analyst's response is:
+"""
+{{ response }}
+"""
+Your output should be in four parts:
+1. Does the analyst mention there are any outliers in the dataset? (True or False)
+2. Does the analyst correctly identify the specific outlier in the dataset? It must be completely obvious that the analyst is identifying the correct outlier, not just a close match. For example, if the analyst identifies an outlier at x ~ 600, but the outlier is at x ~ 841.5, then the analyst did not identify the correct outlier. However, if the analyst identifies an outlier using a reasonably rounded version of the outlier's coordinates, then this is acceptable. (True or False)
+3. Does the analyst identify any outliers that are not the specific given outlier? They not only must discuss a particular point, but also explicitly call it anomalous not just an extreme, minimum, or maximum. (True or False)
+4. Output two or three sentences explaining your reasoning.
