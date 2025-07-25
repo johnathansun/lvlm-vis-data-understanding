@@ -1,0 +1,105 @@
+# syntax=docker/dockerfile:1.4
+
+# 1. Base Image Selection
+# No torch dependency found in the repository. Using the default PyTorch image
+# as per the instructions. This image includes CUDA and development tools.
+FROM pytorch/pytorch:2.3.0-cuda12.1-cudnn8-devel
+ENV CUDA_HOME=/usr/local/cuda-12.1
+
+# 2. Install system dependencies (git for cloning)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# 3. Clone repository and remove .git to keep the image clean
+RUN git clone https://github.com/johnathansun/lvlm-vis-data-understanding . \
+    && rm -rf .git
+
+# 4. Fix broken Python import paths
+# The source code uses an incorrect root package "public.". This removes it.
+RUN find . -type f -name "*.py" -exec sed -i 's/from public\.//g' {} +
+
+# 5. Fix the main experiment script which has broken argument parsing logic
+COPY <<'PYTHON' experiment/generate_responses.py
+import io
+import sys
+import json
+import base64
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from tqdm import tqdm
+from experiment.utils import run_trial_threaded, round_to_significant_figures
+from experiment.img_utils import hash_image
+import argparse
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Run LLM experiments on datasets.")
+
+    parser.add_argument(
+        "filepath",
+        type=str,
+        help="Path to the input dataframe CSV file."
+    )
+
+    parser.add_argument(
+        "--model_name",
+        type=str,
+        required=True,
+        help="Name of the model to use (e.g., gpt-4.1-2025-04-14, claude-3-5-sonnet-20241022)."
+    )
+
+    parser.add_argument(
+        "--max_workers",
+        type=int,
+        default=8,
+        help="Number of worker threads to use."
+    )
+
+    args = parser.parse_args()
+
+    print(f"Running experiment on {args.filepath} with model {args.model_name}")
+    run_trial_threaded(filepath=args.filepath, model_name=args.model_name,
+                       max_workers=args.max_workers) # , data_blank=False, data=False 
+PYTHON
+
+# 6. Install Python dependencies
+RUN pip install --no-cache-dir \
+    pandas \
+    matplotlib \
+    tqdm \
+    openai \
+    anthropic \
+    google-generativeai \
+    jinja2 \
+    pydantic \
+    Pillow
+
+# 7. Create an entrypoint script
+COPY --chmod=755 <<'BASH' /app/entrypoint.sh
+#!/usr/bin/env bash
+set -euo pipefail
+
+# This script runs the main experiment from experiment/generate_responses.py
+# It requires API keys to be set as environment variables.
+# At least one of OPENAI_API_KEY, ANTHROPIC_API_KEY, or GEMINI_API_KEY must be
+# provided, depending on the chosen model.
+
+# --- Example Usage ---
+# docker build -t lvlm-vis .
+# docker run --rm -it \
+#   -e OPENAI_API_KEY="sk-..." \
+#   lvlm-vis \
+#   data/clusters/input_dataframe.csv --model_name gpt-4.1-2025-04-14 --max_workers 2
+
+echo "Executing experiment with arguments: $@"
+python experiment/generate_responses.py "$@"
+BASH
+
+ENTRYPOINT ["/app/entrypoint.sh"]
+
+# 8. Set a default command to demonstrate a run.
+# Note: API keys must be provided as environment variables at runtime.
+CMD ["data/clusters/input_dataframe.csv", "--model_name", "gpt-4.1-2025-04-14", "--max_workers", "2"]
